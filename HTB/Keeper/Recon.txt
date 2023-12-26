@@ -1,0 +1,18 @@
+┌──(root㉿N1NJ10)-[~]
+└─# nmap -Pn --disable-arp-ping -n -sV --min-parallelism 64 10.10.11.227   
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-12-26 02:48 EST
+Nmap scan report for 10.10.11.227
+Host is up (0.20s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    nginx 1.18.0 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 10.95 seconds
+
+
+
+┌──(root㉿N1NJ10)-[~/HTB]
+└─# echo "10.10.11.227   tickets.keeper.htb   keeper.htb" >> /etc/hosts

