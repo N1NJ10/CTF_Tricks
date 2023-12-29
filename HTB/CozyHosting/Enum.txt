@@ -1,0 +1,86 @@
+┌──(root㉿N1NJ10)-[~]
+└─# fscan -h 10.10.11.230
+
+   ___                              _    
+  / _ \     ___  ___ _ __ __ _  ___| | __ 
+ / /_\/____/ __|/ __| '__/ _` |/ __| |/ /
+/ /_\\_____\__ \ (__| | | (_| | (__|   <    
+\____/     |___/\___|_|  \__,_|\___|_|\_\   
+                     fscan version: 1.8.2
+start infoscan
+(icmp) Target 10.10.11.230    is alive
+[*] Icmp alive hosts len is: 1
+10.10.11.230:22 open
+10.10.11.230:80 open
+10.10.11.230:8083 open
+[*] alive ports len is: 3
+start vulscan
+[*] WebTitle: http://10.10.11.230       code:301 len:178    title:301 Moved Permanently 跳转url: http://cozyhosting.htb
+[*] WebTitle: http://10.10.11.230:8083  code:200 len:366    title:Directory listing for /
+[+] InfoScan: http://10.10.11.230:8083  [目录遍历] 
+已完成 1/3 [-] ssh 10.10.11.230:22 root 111111 ssh: handshake failed: ssh: unable to authenticate, attempted methods [none password], no supported methods remain 
+已完成 2/3 [-] ssh 10.10.11.230:22 root root_123 ssh: handshake failed: ssh: unable to authenticate, attempted methods [none password], no supported methods remain 
+已完成 2/3 [-] ssh 10.10.11.230:22 root 123qwe!@# ssh: handshake failed: ssh: unable to authenticate, attempted methods [none password], no supported methods remain 
+已完成 2/3 [-] ssh 10.10.11.230:22 root abc123 ssh: handshake failed: ssh: unable to authenticate, attempted methods [none password], no supported methods remain 
+已完成 2/3 [-] ssh 10.10.11.230:22 root Aa123456 ssh: handshake failed: ssh: unable to authenticate, attempted methods [none password], no supported methods remain 
+已完成 3/3
+[*] 扫描结束,耗时: 5m51.225053507s
+
+
+┌──(root㉿N1NJ10)-[~]
+└─# nmap -Pn --disable-arp-ping -n -sV --min-parallelism 64 10.10.11.230 -p 22,80,8083
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2023-12-28 17:40 EST
+Nmap scan report for 10.10.11.230
+Host is up (0.19s latency).
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+80/tcp   open  http    nginx 1.18.0 (Ubuntu)
+8083/tcp open  us-srv?
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 172.98 seconds
+
+
+┌──(root㉿N1NJ10)-[~]
+└─# echo -n '10.10.11.230 cozyhosting.htb' >> /etc/hosts
+
+
+
+┌──(root㉿N1NJ10)-[~/Downloads/tools/fscan]
+└─# gobuster dir --url http://cozyhosting.htb/ --wordlist /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://cozyhosting.htb/
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/index                (Status: 200) [Size: 12706]
+/login                (Status: 200) [Size: 4431]
+/admin                (Status: 401) [Size: 97]
+/logout               (Status: 204) [Size: 0]
+/error                (Status: 500) [Size: 73]
+Progress: 10162 / 207644 (4.89%)
+===============================================================
+Finished
+===============================================================
+
+default creds : https://support.oneidentity.com/one-identity-safeguard-for-privileged-passwords/kb/4259861/how-to-reset-the-built-in-admin-password#:~:text=The%20Bootstrap%20Administrator%20is%20a,the%20challenge%20response%20process%20below.
+
+NiceAdmin repo : https://github.com/ajcolombini/NiceAdmin
+
+Spring : https://stackoverflow.com/questions/31134333/this-application-has-no-explicit-mapping-for-error , https://bootcamptoprod.com/spring-boot-no-explicit-mapping-error-handling/
+
+Go to http://cozyhosting.htb/actuator/sessions copy the kanderson session then change it with yours 
+
+
+                                                                  
