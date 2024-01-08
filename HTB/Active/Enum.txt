@@ -1,0 +1,323 @@
+┌──(root㉿N1NJ10)-[~]
+└─# fscan -h 10.10.10.100 
+
+   ___                              _    
+  / _ \     ___  ___ _ __ __ _  ___| | __ 
+ / /_\/____/ __|/ __| '__/ _` |/ __| |/ /
+/ /_\\_____\__ \ (__| | | (_| | (__|   <    
+\____/     |___/\___|_|  \__,_|\___|_|\_\   
+                     fscan version: 1.8.2
+start infoscan
+(icmp) Target 10.10.10.100    is alive
+[*] Icmp alive hosts len is: 1
+10.10.10.100:445 open
+10.10.10.100:139 open
+10.10.10.100:135 open
+10.10.10.100:88 open
+[*] alive ports len is: 4
+start vulscan
+已完成 4/4
+[*] 扫描结束,耗时: 5.570035034s
+
+┌──(root㉿N1NJ10)-[~/Downloads/tools/fscan]
+└─# nmap -Pn --disable-arp-ping -n -sV --min-parallelism 64 10.10.10.100 -p 135,139,445,88
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-01-07 19:35 EST
+Nmap scan report for 10.10.10.100
+Host is up (0.26s latency).
+
+PORT    STATE SERVICE       VERSION
+88/tcp  open  kerberos-sec  Microsoft Windows Kerberos (server time: 2024-01-08 00:35:08Z)
+135/tcp open  msrpc         Microsoft Windows RPC
+139/tcp open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds?
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 22.85 seconds
+                                                                                
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# enum4linux -a 10.10.10.100
+Starting enum4linux v0.9.1 ( http://labs.portcullis.co.uk/application/enum4linux/ ) on Sun Jan  7 19:16:26 2024
+
+ =========================================( Target Information )=========================================
+
+Target ........... 10.10.10.100
+RID Range ........ 500-550,1000-1050
+Username ......... ''
+Password ......... ''
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+
+ ============================( Enumerating Workgroup/Domain on 10.10.10.100 )============================
+
+
+[E] Can't find workgroup/domain
+
+
+
+ ================================( Nbtstat Information for 10.10.10.100 )================================
+
+Looking up status of 10.10.10.100
+No reply from 10.10.10.100
+
+ ===================================( Session Check on 10.10.10.100 )===================================
+
+
+[+] Server 10.10.10.100 allows sessions using username '', password ''                                                                 
+                                                                                                                                       
+                                                                                                                                       
+ ================================( Getting domain SID for 10.10.10.100 )================================
+                                                                                                                                       
+do_cmd: Could not initialise lsarpc. Error was NT_STATUS_ACCESS_DENIED                                                                 
+
+[+] Can't determine if host is part of domain or part of a workgroup                                                                   
+                                                                                                                                       
+                                                                                                                                       
+ ===================================( OS information on 10.10.10.100 )===================================
+                                                                                                                                       
+                                                                                                                                       
+[E] Can't get OS info with smbclient                                                                                                   
+                                                                                                                                       
+                                                                                                                                       
+[+] Got OS info for 10.10.10.100 from srvinfo:                                                                                         
+        10.10.10.100   Wk Sv PDC Tim NT     Domain Controller                                                                          
+        platform_id     :       500
+        os version      :       6.1
+        server type     :       0x80102b
+
+
+ =======================================( Users on 10.10.10.100 )=======================================
+                                                                                                                                       
+                                                                                                                                       
+[E] Couldn't find users using querydispinfo: NT_STATUS_ACCESS_DENIED                                                                   
+                                                                                                                                       
+                                                                                                                                       
+
+[E] Couldn't find users using enumdomusers: NT_STATUS_ACCESS_DENIED                                                                    
+                                                                                                                                       
+                                                                                                                                       
+ =================================( Share Enumeration on 10.10.10.100 )=================================
+                                                                                                                                       
+do_connect: Connection to 10.10.10.100 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)                                                
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        IPC$            IPC       Remote IPC
+        NETLOGON        Disk      Logon server share 
+        Replication     Disk      
+        SYSVOL          Disk      Logon server share 
+        Users           Disk      
+Reconnecting with SMB1 for workgroup listing.
+Unable to connect with SMB1 -- no workgroup available
+
+[+] Attempting to map shares on 10.10.10.100                                                                                           
+                                                                                                                                       
+//10.10.10.100/ADMIN$   Mapping: DENIED Listing: N/A Writing: N/A                                                                      
+//10.10.10.100/C$       Mapping: DENIED Listing: N/A Writing: N/A
+//10.10.10.100/IPC$     Mapping: OK Listing: DENIED Writing: N/A
+//10.10.10.100/NETLOGON Mapping: DENIED Listing: N/A Writing: N/A
+//10.10.10.100/Replication      Mapping: OK Listing: OK Writing: N/A
+//10.10.10.100/SYSVOL   Mapping: DENIED Listing: N/A Writing: N/A
+//10.10.10.100/Users    Mapping: DENIED Listing: N/A Writing: N/A
+
+ ============================( Password Policy Information for 10.10.10.100 )============================
+                                                                                                                                       
+                                                                                                                                       
+[E] Unexpected error from polenum:                                                                                                     
+                                                                                                                                       
+                                                                                                                                       
+
+[+] Attaching to 10.10.10.100 using a NULL share
+
+[+] Trying protocol 139/SMB...
+
+        [!] Protocol failed: Cannot request session (Called Name:10.10.10.100)
+
+[+] Trying protocol 445/SMB...
+
+        [!] Protocol failed: SMB SessionError: STATUS_ACCESS_DENIED({Access Denied} A process has requested access to an object but has not been granted those access rights.)
+
+
+
+[E] Failed to get password policy with rpcclient                                                                                       
+                                                                                                                                       
+                                                                                                                                       
+
+ =======================================( Groups on 10.10.10.100 )=======================================
+                                                                                                                                       
+                                                                                                                                       
+[+] Getting builtin groups:                                                                                                            
+                                                                                                                                       
+                                                                                                                                       
+[+]  Getting builtin group memberships:                                                                                                
+                                                                                                                                       
+                                                                                                                                       
+[+]  Getting local groups:                                                                                                             
+                                                                                                                                       
+                                                                                                                                       
+[+]  Getting local group memberships:                                                                                                  
+                                                                                                                                       
+                                                                                                                                       
+[+]  Getting domain groups:                                                                                                            
+                                                                                                                                       
+                                                                                                                                       
+[+]  Getting domain group memberships:                                                                                                 
+                                                                                                                                       
+                                                                                                                                       
+ ==================( Users on 10.10.10.100 via RID cycling (RIDS: 500-550,1000-1050) )==================
+                                                                                                                                       
+                                                                                                                                       
+[E] Couldn't get SID: NT_STATUS_ACCESS_DENIED.  RID cycling not possible.                                                              
+                                                                                                                                       
+                                                                                                                                       
+ ===============================( Getting printer info for 10.10.10.100 )===============================
+                                                                                                                                       
+do_cmd: Could not initialise spoolss. Error was NT_STATUS_ACCESS_DENIED                                                                
+
+
+enum4linux complete on Sun Jan  7 19:17:45 2024
+
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# netexec smb 10.10.10.100 -u '' -p ''         
+SMB         10.10.10.100    445    DC               [*] Windows 6.1 Build 7601 x64 (name:DC) (domain:active.htb) (signing:True) (SMBv1:False)                                                                                                                                 
+SMB         10.10.10.100    445    DC               [+] active.htb\: 
+
+
+┌──(root㉿N1NJ10)-[~/HTB/active]
+└─# smbclient  \\\\10.10.10.100\\Replication -U ''%''
+Try "help" to get a list of possible commands.
+smb: \> recurse on
+smb: \> prompt off
+smb: \> ls
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  active.htb                          D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  DfsrPrivate                       DHS        0  Sat Jul 21 06:37:44 2018
+  Policies                            D        0  Sat Jul 21 06:37:44 2018
+  scripts                             D        0  Wed Jul 18 14:48:57 2018
+
+\active.htb\DfsrPrivate
+  .                                 DHS        0  Sat Jul 21 06:37:44 2018
+  ..                                DHS        0  Sat Jul 21 06:37:44 2018
+  ConflictAndDeleted                  D        0  Wed Jul 18 14:51:30 2018
+  Deleted                             D        0  Wed Jul 18 14:51:30 2018
+  Installing                          D        0  Wed Jul 18 14:51:30 2018
+
+\active.htb\Policies
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  {31B2F340-016D-11D2-945F-00C04FB984F9}      D        0  Sat Jul 21 06:37:44 2018
+  {6AC1786C-016F-11D2-945F-00C04fB984F9}      D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\scripts
+  .                                   D        0  Wed Jul 18 14:48:57 2018
+  ..                                  D        0  Wed Jul 18 14:48:57 2018
+
+\active.htb\DfsrPrivate\ConflictAndDeleted
+  .                                   D        0  Wed Jul 18 14:51:30 2018
+  ..                                  D        0  Wed Jul 18 14:51:30 2018
+
+\active.htb\DfsrPrivate\Deleted
+  .                                   D        0  Wed Jul 18 14:51:30 2018
+  ..                                  D        0  Wed Jul 18 14:51:30 2018
+
+\active.htb\DfsrPrivate\Installing
+  .                                   D        0  Wed Jul 18 14:51:30 2018
+  ..                                  D        0  Wed Jul 18 14:51:30 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  GPT.INI                             A       23  Wed Jul 18 16:46:06 2018
+  Group Policy                        D        0  Sat Jul 21 06:37:44 2018
+  MACHINE                             D        0  Sat Jul 21 06:37:44 2018
+  USER                                D        0  Wed Jul 18 14:49:12 2018
+
+\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  GPT.INI                             A       22  Wed Jul 18 14:49:12 2018
+  MACHINE                             D        0  Sat Jul 21 06:37:44 2018
+  USER                                D        0  Wed Jul 18 14:49:12 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\Group Policy
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  GPE.INI                             A      119  Wed Jul 18 16:46:06 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  Microsoft                           D        0  Sat Jul 21 06:37:44 2018
+  Preferences                         D        0  Sat Jul 21 06:37:44 2018
+  Registry.pol                        A     2788  Wed Jul 18 14:53:45 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\USER
+  .                                   D        0  Wed Jul 18 14:49:12 2018
+  ..                                  D        0  Wed Jul 18 14:49:12 2018
+
+\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  Microsoft                           D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\USER
+  .                                   D        0  Wed Jul 18 14:49:12 2018
+  ..                                  D        0  Wed Jul 18 14:49:12 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Microsoft
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  Windows NT                          D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  Groups                              D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE\Microsoft
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  Windows NT                          D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Microsoft\Windows NT
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  SecEdit                             D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  Groups.xml                          A      533  Wed Jul 18 16:46:06 2018
+
+\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE\Microsoft\Windows NT
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  SecEdit                             D        0  Sat Jul 21 06:37:44 2018
+
+\active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Microsoft\Windows NT\SecEdit
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  GptTmpl.inf                         A     1098  Wed Jul 18 14:49:12 2018
+
+\active.htb\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}\MACHINE\Microsoft\Windows NT\SecEdit
+  .                                   D        0  Sat Jul 21 06:37:44 2018
+  ..                                  D        0  Sat Jul 21 06:37:44 2018
+  GptTmpl.inf                         A     3722  Wed Jul 18 14:49:12 2018
+
+                5217023 blocks of size 4096. 283561 blocks available
+smb: \> get \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\Groups.xml
+getting file \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\Groups.xml of size 533 as \active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups\Groups.xml (0.6 KiloBytes/sec) (average 0.6 KiloBytes/sec)
+smb: \> 
+
+
+
+                                                                                                                                       
